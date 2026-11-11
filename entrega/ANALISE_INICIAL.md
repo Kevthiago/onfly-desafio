@@ -1,5 +1,11 @@
 # Análise inicial — Consolidador de reservas de hotel (Onfly)
 
+> **Atualização (após as correções):** este documento foi escrito na primeira sessão, só de análise, e o texto
+> abaixo é o original. Este arquivo nasceu na raiz e foi movido para `entrega/`. As decisões da seção 9 foram
+> respondidas, o plano de configuração (seção 7) foi implementado em `CLAUDE.md` e `.claude/settings.json`, e os
+> defeitos D1–D5 e a moeda sem taxa foram corrigidos em commits próprios. O relato das correções está em
+> [README-ENTREGA.md](README-ENTREGA.md). Ver as notas de status em cada seção.
+
 Sessão de análise e planejamento. **Nada foi corrigido**: nenhum arquivo do projeto foi alterado além deste.
 O `git status` ficou limpo durante toda a sessão. O pytest rodou em um venv fora do repositório
 (com `PYTHONDONTWRITEBYTECODE=1` e `-p no:cacheprovider`). As saídas do CLI foram gravadas em `/tmp`.
@@ -137,6 +143,11 @@ de exit code chamam `subprocess` ou `main()` diretamente, sem alterar o helper.
 
 ## 7. Plano de configuração de desenvolvimento assistido por IA
 
+> **Status:** implementado e commitado (`chore: configuração de desenvolvimento assistido por IA`). Diferenças em
+> relação à proposta abaixo: os comandos usam o Python do `.venv` da raiz (`.venv/Scripts/python`), porque o Python
+> global não tinha pytest; o hook de pytest após editar `src/` foi aprovado e usa `"if": "Edit(src/**)"`. Nesta
+> sessão o hook rodou nas edições de `src/` e não nas de `tests/`, conferido pelo horário do cache do pytest.
+
 O projeto é pequeno (~10 módulos de ~10–100 linhas, 5 testes, só stdlib). A configuração fica proporcional: **CLAUDE.md +
 settings.json**, e nada além disso.
 
@@ -265,6 +276,23 @@ Observação: `output/*` está no `.gitignore` (exceto `.gitkeep`), então o rel
 
 ## 9. Decisões suas e perguntas em aberto
 
+> **Status: todas respondidas pelo autor.** Respostas, na ordem abaixo:
+> 1. Moeda sem taxa: tratar como exit 2, depois dos 5 defeitos, em commit separado e com teste. Feito. A moeda **não**
+>    é validada antes do filtro de status; reserva CANCELLED/NO_SHOW com moeda sem taxa não gera erro.
+> 2. Sem validações extras (`rooms < 1`, moeda em minúscula, status desconhecido) e **sem log novo**. A
+>    recomendação de registrar um aviso para status desconhecido **não foi adotada**.
+> 3. Status desconhecido: não faturável (resolvido junto com D2).
+> 4. Testes novos em `tests/test_*_extra.py`, na mesma pasta.
+> 5. Hook de pytest: sim.
+> 6. Um commit por defeito, depois um de configuração e um de documentos; todos feitos pelo autor.
+> 7. `ANALISE_INICIAL.md` movido para `entrega/`.
+> 8. `data/exemplo-validacao.csv` também é somente leitura.
+> 9. O `/export` das sessões é feito pelo autor.
+> 10. O autor usa o `.venv` da raiz.
+>
+> Uma regra a mais, definida pelo autor depois da análise: se aparecesse defeito além de D1–D5 que violasse o README,
+> a IA avisaria antes de corrigir. Nenhum apareceu.
+
 1. **Moeda sem taxa**: hoje vira `KeyError` → exit 1. Devo tratar como entrada inválida (exit 2, mensagem clara)?
    *Recomendação:* sim, é mudança pequena e fica dentro do contrato; mas é **opcional** e não está nos 5 defeitos.
 2. **Validações extras** (`rooms < 1`, `checkout <= checkin`, moeda em minúsculas, status desconhecido): endurecer
@@ -284,4 +312,4 @@ Observação: `output/*` está no `.gitignore` (exceto `.gitkeep`), então o rel
     criar o `.venv` do README na raiz (já está no `.gitignore`)?
 
 ---
-**Parei aqui, aguardando sua aprovação.** Nenhuma correção foi aplicada e nada foi commitado.
+*(Texto original da primeira sessão:)* **Parei aqui, aguardando sua aprovação.** Nenhuma correção foi aplicada e nada foi commitado.

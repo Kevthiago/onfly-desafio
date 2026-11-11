@@ -2,7 +2,7 @@
 
 ## Comandos
 Use o Python do `.venv` da raiz (no Windows: `.venv\Scripts\python`; em Git Bash: `.venv/Scripts/python`).
-O Python global não tem pytest.
+O Python global não tem pytest. Em Linux/macOS, troque por `.venv/bin/python` (os demais argumentos são iguais).
 
 - Testes: `.venv/Scripts/python -m pytest -q`
 - CLI: `PYTHONPATH=src .venv/Scripts/python -m onfly_report --input data/reservas_hoteis.csv --rates data/taxas_cambio.csv --output output/report.json --top 5`
