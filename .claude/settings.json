@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/python -m pytest:*)",
+      "Bash(.venv/Scripts/python -m ruff check:*)",
+      "Bash(.venv/Scripts/python -m onfly_report:*)",
+      "Bash(PYTHONPATH=src .venv/Scripts/python -m onfly_report:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Edit(tests/helpers.py)",
+      "Edit(tests/test_currency.py)",
+      "Edit(tests/test_nights.py)",
+      "Edit(tests/test_regression_report.py)",
+      "Edit(tests/test_status_rules.py)",
+      "Edit(tests/test_top_hotels.py)",
+      "Edit(data/reservas_hoteis.csv)",
+      "Edit(data/taxas_cambio.csv)",
+      "Edit(data/exemplo-validacao.csv)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Edit(src/**)",
+            "command": ".venv/Scripts/python -m pytest -q"
+          }
+        ]
+      }
+    ]
+  }
+}
