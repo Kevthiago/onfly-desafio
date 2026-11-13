@@ -9,10 +9,12 @@
 
 ## Preparação (chat separado, não exportado)
 
-Antes de abrir o Claude Code, usei o Claude em um chat separado para planejar a abordagem. Nesse chat, o Claude
+Antes de abrir o Claude Code, usei o Claude em um chat separado para planejar a abordagem). Nesse chat, o Claude
 redigiu o prompt inicial e os prompts de cada etapa seguinte, revisou os relatórios e as saídas do Claude Code que
 colei, recomendou respostas para as decisões em aberto e sugeriu as mensagens de commit. Eu li o material, decidi
 o que aproveitar e enviei os prompts. Esse chat não está exportado nesta pasta.
+
+Esse chat não está exportado porque a mesma conversa continuou depois com assuntos de outros projetos, sem relação com este desafio. O papel dele está descrito acima; tudo o que foi feito no repositório está na `sessao-01.md`.
 
 ## O que a IA fez
 
